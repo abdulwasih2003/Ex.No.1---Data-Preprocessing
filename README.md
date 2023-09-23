@@ -31,77 +31,99 @@ Encoding categorical data
 Normalizing the data
 Splitting the data into test and train
 
-## PROGRAM:
-```
+## PROGRAM:-
+
+Name: Sarankumar J
+
+Reg No: 212221230087
+```py
+#importing libraries
 import pandas as pd
+import io
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 
-df = pd.read_csv("Churn_Modelling.csv")
+#Reading the dataset
+df=pd.read_csv("/content/Churn_Modelling.csv", index_col="RowNumber")
+df
 
-df.head()
-df.info()
+#Dropping the unwanted Columns
+df.drop(['CustomerId'],axis=1,inplace=True)
+df.drop(['Surname'],axis=1,inplace=True)
+df.drop('Age',axis=1,inplace=True)
+df.drop('Geography',axis=1,inplace=True)
+df.drop('Gender',axis=1,inplace=True)
+df
 
-x = df.iloc[:,:-1].values
-y= df.iloc[:,1].values
-x
-y
+#Checking for null values
+df.isnull().sum()
 
+#Checking for duplicate values
+df.duplicated()
+
+#Describing the dataset
 df.describe()
 
+#Scaling the dataset
+scaler=StandardScaler()
+df1=pd.DataFrame(scaler.fit_transform(df))
+df1
 
-from sklearn.preprocessing import LabelEncoder
-le = LabelEncoder()
+#Allocating X and Y attributes
+x=df1.iloc[:,:-1].values
+x
+y=df1.iloc[:,-1].values
+y
 
-df1 = df.copy()
-
-df1["Geography"] = le.fit_transform(df1["Geography"])
-df1["Gender"] = le.fit_transform(df1["Gender"])
-
-
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import MinMaxScaler
-
-scaler = MinMaxScaler()
-
-df1[["CreditScore","Geography","Age","Tenure","Balance","NumOfProducts","EstimatedSalary"]] = pd.DataFrame(scaler.fit_transform(df1[["CreditScore","Geography","Age","Tenure","Balance","NumOfProducts","EstimatedSalary"]]))
-
-
-
-df1.describe()
-
-
-X = df1[["CreditScore","Geography","Gender","Age","Tenure","Balance","NumOfProducts","HasCrCard","IsActiveMember","EstimatedSalary"]].values
-print(X)
-
-y = df1.iloc[:,-1].values
-print(y)
-
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-print(X_train)
-
-print("Size of X_train: ",len(X_train))
-
-print(X_test)
-print("Size of X_test: ",len(X_test))
+#Splitting the data into training and testing dataset
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+print(x_train)
+print(len(x_train))
+print(x_test)
+print(len(x_test))
 ```
-## OUTPUT:
-### Head:
-![1head](https://user-images.githubusercontent.com/94154683/228591926-618062d0-fd7f-4181-a042-e1ee43a5d18d.png)
-### info:
-![info](https://user-images.githubusercontent.com/94154683/228591956-89263e4a-45cf-4eb3-89bd-16cf0a40c178.png)
+## OUTPUT:-
 
-![x](https://user-images.githubusercontent.com/94154683/228591978-71bd9fb4-acf6-4ed6-885e-4de18ae8af1c.png)
+The dataset
 
-![y](https://user-images.githubusercontent.com/94154683/228592025-54fdf899-60b9-40a2-b60b-1d23ce73db9b.png)
-### describe before normalizing :
-![desc](https://user-images.githubusercontent.com/94154683/228592074-afc9569f-958d-40d3-8b2c-3ea72552aad0.png)
-### describe after normalizing:
-![desc_after_norm](https://user-images.githubusercontent.com/94154683/228592117-6fb6d8af-aaa9-45b9-96e4-6c2a6ce265de.png)
-### size of xtrain:
-![size1](https://user-images.githubusercontent.com/94154683/228592156-e5dbfef8-79bd-43c0-9d3c-96cd94e854a4.png)
-### size of xtest:
-![size2](https://user-images.githubusercontent.com/94154683/228592179-56762c01-f5dc-47ad-93ab-b4bdd147aced.png)
+![op1](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/c4e70658-7328-4e9f-b85b-143e8400043b)
+
+Dropping unwanted features
+
+![op2](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/f83dd65e-0644-42e4-8754-fd3099d64c25)
+
+
+Checking for null values
+
+![op3](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/2c517b1d-a8f3-4cf2-b5f7-658c2db97dcc)
+
+
+Checking for duplication
+
+![op4](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/6f74b0e8-00a0-4408-8c3f-10be509c735d)
+
+
+Describing the dataset
+
+![op5](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/2bdd1870-5288-4144-875f-0daca4187b26)
+
+Scaling the values
+
+![op6](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/bce4b62f-6fab-4e64-9071-53c1279f1ab7)
+
+X Features
+
+![op7](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/9bd0495a-2d1b-4ec9-8bc7-3ea0e4bc8091)
+
+Y Features
+
+![op8](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/041d5778-eafe-4499-9bce-4279905d6a5b)
+
+
+Splitting the training and testing dataset
+
+![op9](https://github.com/SarankumarJ/Ex.No.1---Data-Preprocessing/assets/94778101/5109a96c-7345-4c24-b27b-03cb07256505)
+
 
 ## RESULT
-Data preprocessing is performed in the given dataset.
+Thus we have successfully performed Data preprocessing in a data set downloaded from Kaggle
